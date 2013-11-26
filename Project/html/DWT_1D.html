@@ -1,0 +1,277 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>&plusmn;&frac34;&sup3;&Igrave;&ETH;&ograve;&Oacute;&Atilde;Mallat&Euml;&atilde;&middot;&uml;&Ecirc;&micro;&Iuml;&Ouml;&ETH;&iexcl;&sup2;&uml;&plusmn;&auml;&raquo;&raquo;</title><meta name="generator" content="MATLAB 8.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2013-11-17"><meta name="DC.source" content="DWT_1D.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>&plusmn;&frac34;&sup3;&Igrave;&ETH;&ograve;&Oacute;&Atilde;Mallat&Euml;&atilde;&middot;&uml;&Ecirc;&micro;&Iuml;&Ouml;&ETH;&iexcl;&sup2;&uml;&plusmn;&auml;&raquo;&raquo;</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">&plusmn;&agrave;&sup3;&Igrave;&Egrave;&Euml;    &Eacute;&sup3;&Iacute;&thorn;(Wei Sha) &deg;&sup2;&raquo;&Otilde;&acute;&oacute;&Ntilde;&sect;(Anhui University) <a href="mailto:ws108@ahu.edu.cn">ws108@ahu.edu.cn</a></a></li><li><a href="#2">2.&ETH;&iexcl;&sup2;&uml;&Acirc;&Euml;&sup2;&uml;&AElig;&divide;&AElig;&times;&middot;&Ouml;&Icirc;&ouml;</a></li><li><a href="#3">4.MALLET&Ouml;&Oslash;&sup1;&sup1;&Euml;&atilde;&middot;&uml;</a></li><li><a href="#4">5.&plusmn;&Egrave;&frac12;&Iuml;</a></li></ul></div><h2>&plusmn;&agrave;&sup3;&Igrave;&Egrave;&Euml;    &Eacute;&sup3;&Iacute;&thorn;(Wei Sha) &deg;&sup2;&raquo;&Otilde;&acute;&oacute;&Ntilde;&sect;(Anhui University) <a href="mailto:ws108@ahu.edu.cn">ws108@ahu.edu.cn</a><a name="1"></a></h2><pre class="codeinput">clc;clear;
+
+<span class="comment">%  1.&Otilde;&yacute;&Iuml;&Ograve;&sup2;&uml;&para;&uml;&Ograve;&aring;</span>
+f1=50;  <span class="comment">%  &AElig;&micro;&Acirc;&Ecirc;1</span>
+f2=100; <span class="comment">%  &AElig;&micro;&Acirc;&Ecirc;2</span>
+fs=2*(f1+f2);  <span class="comment">%  &sup2;&Eacute;&Ntilde;&ugrave;&AElig;&micro;&Acirc;&Ecirc;</span>
+Ts=1/fs;  <span class="comment">%  &sup2;&Eacute;&Ntilde;&ugrave;&frac14;&auml;&cedil;&ocirc;</span>
+N=120;    <span class="comment">%  &sup2;&Eacute;&Ntilde;&ugrave;&micro;&atilde;&Ecirc;&yacute;</span>
+
+n=1:N;
+y=sin(2*pi*f1*n*Ts)+sin(2*pi*f2*n*Ts);  <span class="comment">%  &Otilde;&yacute;&Iuml;&Ograve;&sup2;&uml;&raquo;&igrave;&ordm;&Iuml;</span>
+
+figure(1)
+subplot(2,1,1)
+plot(y);
+title(<span class="string">'Signal'</span>)
+subplot(2,1,2)
+stem(abs(fft(y)));
+title(<span class="string">'Amplitude Spectrum'</span>)
+</pre><img vspace="5" hspace="5" src="DWT_1D_01.png" alt=""> <h2>2.&ETH;&iexcl;&sup2;&uml;&Acirc;&Euml;&sup2;&uml;&AElig;&divide;&AElig;&times;&middot;&Ouml;&Icirc;&ouml;<a name="2"></a></h2><pre class="codeinput">h=wfilters(<span class="string">'db30'</span>,<span class="string">'l'</span>);  <span class="comment">%  &micro;&Iacute;&Iacute;&uml;</span>
+g=wfilters(<span class="string">'db30'</span>,<span class="string">'h'</span>);  <span class="comment">%  &cedil;&szlig;&Iacute;&uml;</span>
+
+h=[h,zeros(1,N-length(h))];  <span class="comment">%  &sup2;&sup1;&Aacute;&atilde;&pound;&uml;&Ocirc;&sup2;&Ouml;&Uuml;&frac34;&iacute;&raquo;&yacute;&pound;&not;&Ccedil;&Ograve;&Ocirc;&ouml;&acute;&oacute;&middot;&Ouml;&plusmn;&aelig;&Acirc;&Ecirc;&plusmn;&auml;&Oacute;&Uacute;&sup1;&Ucirc;&sup2;&igrave;&pound;&copy;</span>
+g=[g,zeros(1,N-length(g))];  <span class="comment">%  &sup2;&sup1;&Aacute;&atilde;&pound;&uml;&Ocirc;&sup2;&Ouml;&Uuml;&frac34;&iacute;&raquo;&yacute;&pound;&not;&Ccedil;&Ograve;&Ocirc;&ouml;&acute;&oacute;&middot;&Ouml;&plusmn;&aelig;&Acirc;&Ecirc;&plusmn;&auml;&Oacute;&Uacute;&sup1;&Ucirc;&sup2;&igrave;&pound;&copy;</span>
+
+figure(3);
+subplot(2,1,1)
+stem(abs(fft(h)));
+title(<span class="string">'Low-pass Filter(V_{0})'</span>)
+
+subplot(2,1,2)
+stem(abs(fft(g)));
+title(<span class="string">'High-pass Filter(W_{0})'</span>)
+
+<span class="comment">%  3.MALLET&middot;&Ouml;&frac12;&acirc;&Euml;&atilde;&middot;&uml;(&Ocirc;&sup2;&Ouml;&Uuml;&frac34;&iacute;&raquo;&yacute;&micro;&Auml;&iquest;&igrave;&Euml;&Ugrave;&cedil;&micro;&Agrave;&iuml;&Ograve;&para;&plusmn;&auml;&raquo;&raquo;&Ecirc;&micro;&Iuml;&Ouml;)</span>
+sig1=ifft(fft(y).*fft(h));  <span class="comment">%  &micro;&Iacute;&Iacute;&uml;(&micro;&Iacute;&AElig;&micro;&middot;&Ouml;&Aacute;&iquest;)</span>
+sig2=ifft(fft(y).*fft(g));  <span class="comment">%  &cedil;&szlig;&Iacute;&uml;(&cedil;&szlig;&AElig;&micro;&middot;&Ouml;&Aacute;&iquest;)</span>
+
+figure(5);  <span class="comment">%  &ETH;&Aring;&ordm;&Aring;&Iacute;&frac14;</span>
+subplot(2,1,1)
+plot(real(sig1));
+title(<span class="string">'Low-frequency Component'</span>)
+
+subplot(2,1,2)
+plot(real(sig2));
+title(<span class="string">'High-frequency Component'</span>)
+
+figure(6);  <span class="comment">%  &AElig;&micro;&AElig;&times;&Iacute;&frac14;</span>
+subplot(2,1,1)
+stem(abs(fft(sig1)));
+title(<span class="string">'Amplitude Spectrum of Low-frequency Component'</span>)
+
+subplot(2,1,2)
+stem(abs(fft(sig2)));
+title(<span class="string">'Amplitude Spectrum of High-frequency Component'</span>)
+</pre><img vspace="5" hspace="5" src="DWT_1D_02.png" alt=""> <img vspace="5" hspace="5" src="DWT_1D_03.png" alt=""> <img vspace="5" hspace="5" src="DWT_1D_04.png" alt=""> <h2>4.MALLET&Ouml;&Oslash;&sup1;&sup1;&Euml;&atilde;&middot;&uml;<a name="3"></a></h2><pre class="codeinput">sig1=dyaddown(sig1); <span class="comment">%  2&sup3;&eacute;&Egrave;&iexcl;</span>
+sig2=dyaddown(sig2); <span class="comment">%  2&sup3;&eacute;&Egrave;&iexcl;</span>
+
+sig1=dyadup(sig1);   <span class="comment">%  2&sup2;&aring;&Ouml;&micro;</span>
+sig2=dyadup(sig2);   <span class="comment">%  2&sup2;&aring;&Ouml;&micro;</span>
+sig1=sig1(1,[1:N]);  <span class="comment">%  &Egrave;&yen;&micro;&ocirc;&times;&icirc;&ordm;&oacute;&Ograve;&raquo;&cedil;&ouml;&Aacute;&atilde;</span>
+sig2=sig2(1,[1:N]);  <span class="comment">%  &Egrave;&yen;&micro;&ocirc;&times;&icirc;&ordm;&oacute;&Ograve;&raquo;&cedil;&ouml;&Aacute;&atilde;</span>
+
+hr=h(end:-1:1);         <span class="comment">%  &Ouml;&Oslash;&sup1;&sup1;&micro;&Iacute;&Iacute;&uml;</span>
+gr=g(end:-1:1);         <span class="comment">%  &Ouml;&Oslash;&sup1;&sup1;&cedil;&szlig;&Iacute;&uml;</span>
+hr=circshift(hr',1)';   <span class="comment">%  &Icirc;&raquo;&Ouml;&Atilde;&micro;&divide;&Otilde;&ucirc;&Ocirc;&sup2;&Ouml;&Uuml;&Oacute;&Ograve;&Ograve;&AElig;&Ograve;&raquo;&Icirc;&raquo;</span>
+gr=circshift(gr',1)';   <span class="comment">%  &Icirc;&raquo;&Ouml;&Atilde;&micro;&divide;&Otilde;&ucirc;&Ocirc;&sup2;&Ouml;&Uuml;&Oacute;&Ograve;&Ograve;&AElig;&Ograve;&raquo;&Icirc;&raquo;</span>
+
+sig1=ifft(fft(hr).*fft(sig1));  <span class="comment">%  &micro;&Iacute;&AElig;&micro;</span>
+sig2=ifft(fft(gr).*fft(sig2));  <span class="comment">%  &cedil;&szlig;&AElig;&micro;</span>
+sig=sig1+sig2; <span class="comment">%  &Ocirc;&acute;&ETH;&Aring;&ordm;&Aring;</span>
+</pre><h2>5.&plusmn;&Egrave;&frac12;&Iuml;<a name="4"></a></h2><pre class="codeinput">figure(7);
+subplot(2,1,1)
+plot(real(sig1));
+title(<span class="string">'Reconstructed Low-frequency Signal'</span>);
+subplot(2,1,2)
+plot(real(sig2));
+title(<span class="string">'Reconstructed High-frequency Signal'</span>);
+
+figure(8);
+subplot(2,1,1)
+stem(abs(fft(sig1)));
+title(<span class="string">'Spectra of the Reconstructed Low-frequency Signal'</span>);
+subplot(2,1,2)
+stem(abs(fft(sig2)));
+title(<span class="string">'Spectra of the Reconstructed High-frequency Signal'</span>);
+
+figure(9)
+plot(real(sig),<span class="string">'r'</span>,<span class="string">'linewidth'</span>,2);
+hold <span class="string">on</span>;
+plot(y);
+legend(<span class="string">'Reconstructed Signal'</span>,<span class="string">'Original Signal'</span>)
+title(<span class="string">'Comparisons between Original Signal and Reconstructed Signal'</span>)
+</pre><img vspace="5" hspace="5" src="DWT_1D_05.png" alt=""> <img vspace="5" hspace="5" src="DWT_1D_06.png" alt=""> <img vspace="5" hspace="5" src="DWT_1D_07.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2012b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%%  ±¾³ÌÐòÓÃMallatËã·¨ÊµÏÖÐ¡²¨±ä»»
+%%  ±à³ÌÈË    É³Íþ(Wei Sha) °²»Õ´óÑ§(Anhui University) ws108@ahu.edu.cn
+
+clc;clear;
+
+%  1.ÕýÏÒ²¨¶¨Òå
+f1=50;  %  ÆµÂÊ1
+f2=100; %  ÆµÂÊ2
+fs=2*(f1+f2);  %  ²ÉÑùÆµÂÊ
+Ts=1/fs;  %  ²ÉÑù¼ä¸ô
+N=120;    %  ²ÉÑùµãÊý
+
+n=1:N;
+y=sin(2*pi*f1*n*Ts)+sin(2*pi*f2*n*Ts);  %  ÕýÏÒ²¨»ìºÏ
+
+figure(1)
+subplot(2,1,1)
+plot(y);
+title('Signal')
+subplot(2,1,2)
+stem(abs(fft(y)));
+title('Amplitude Spectrum')
+
+%%  2.Ð¡²¨ÂË²¨Æ÷Æ×·ÖÎö
+h=wfilters('db30','l');  %  µÍÍ¨
+g=wfilters('db30','h');  %  ¸ßÍ¨
+
+h=[h,zeros(1,N-length(h))];  %  ²¹Áã£¨Ô²ÖÜ¾í»ý£¬ÇÒÔö´ó·Ö±æÂÊ±äÓÚ¹Û²ì£©
+g=[g,zeros(1,N-length(g))];  %  ²¹Áã£¨Ô²ÖÜ¾í»ý£¬ÇÒÔö´ó·Ö±æÂÊ±äÓÚ¹Û²ì£©
+
+figure(3);
+subplot(2,1,1)
+stem(abs(fft(h)));
+title('Low-pass Filter(V_{0})')
+
+subplot(2,1,2)
+stem(abs(fft(g)));
+title('High-pass Filter(W_{0})')
+
+%  3.MALLET·Ö½âËã·¨(Ô²ÖÜ¾í»ýµÄ¿ìËÙ¸µÀïÒ¶±ä»»ÊµÏÖ)
+sig1=ifft(fft(y).*fft(h));  %  µÍÍ¨(µÍÆµ·ÖÁ¿)
+sig2=ifft(fft(y).*fft(g));  %  ¸ßÍ¨(¸ßÆµ·ÖÁ¿)
+
+figure(5);  %  ÐÅºÅÍ¼
+subplot(2,1,1)
+plot(real(sig1));
+title('Low-frequency Component')
+
+subplot(2,1,2)
+plot(real(sig2));
+title('High-frequency Component')
+
+figure(6);  %  ÆµÆ×Í¼
+subplot(2,1,1)
+stem(abs(fft(sig1)));
+title('Amplitude Spectrum of Low-frequency Component')
+
+subplot(2,1,2)
+stem(abs(fft(sig2)));
+title('Amplitude Spectrum of High-frequency Component')
+
+%%  4.MALLETÖØ¹¹Ëã·¨
+sig1=dyaddown(sig1); %  2³éÈ¡
+sig2=dyaddown(sig2); %  2³éÈ¡
+
+sig1=dyadup(sig1);   %  2²åÖµ
+sig2=dyadup(sig2);   %  2²åÖµ
+sig1=sig1(1,[1:N]);  %  È¥µô×îºóÒ»¸öÁã
+sig2=sig2(1,[1:N]);  %  È¥µô×îºóÒ»¸öÁã
+
+hr=h(end:-1:1);         %  ÖØ¹¹µÍÍ¨
+gr=g(end:-1:1);         %  ÖØ¹¹¸ßÍ¨
+hr=circshift(hr',1)';   %  Î»ÖÃµ÷ÕûÔ²ÖÜÓÒÒÆÒ»Î»
+gr=circshift(gr',1)';   %  Î»ÖÃµ÷ÕûÔ²ÖÜÓÒÒÆÒ»Î»
+
+sig1=ifft(fft(hr).*fft(sig1));  %  µÍÆµ
+sig2=ifft(fft(gr).*fft(sig2));  %  ¸ßÆµ
+sig=sig1+sig2; %  Ô´ÐÅºÅ
+
+%%  5.±È½Ï
+figure(7);
+subplot(2,1,1)
+plot(real(sig1));
+title('Reconstructed Low-frequency Signal');
+subplot(2,1,2)
+plot(real(sig2));
+title('Reconstructed High-frequency Signal');
+
+figure(8);
+subplot(2,1,1)
+stem(abs(fft(sig1)));
+title('Spectra of the Reconstructed Low-frequency Signal');
+subplot(2,1,2)
+stem(abs(fft(sig2)));
+title('Spectra of the Reconstructed High-frequency Signal');
+
+figure(9)
+plot(real(sig),'r','linewidth',2);
+hold on;
+plot(y);
+legend('Reconstructed Signal','Original Signal')
+title('Comparisons between Original Signal and Reconstructed Signal')
+
+
+
+
+
+
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>
