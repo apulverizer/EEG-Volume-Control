@@ -13,61 +13,61 @@ addpath(genpath('../PSO'));
 load('indicies.mat');
 
 %% Extract Data Collected
-% CollectedData.Class1.Ch1 = [];
-% CollectedData.Class1.Ch2 = [];
-% CollectedData.Class1.Ch3 = [];
-% CollectedData.Class1.Ch4 = [];
-% CollectedData.Class2.Ch1 = [];
-% CollectedData.Class2.Ch2 = [];
-% CollectedData.Class2.Ch3 = [];
-% CollectedData.Class2.Ch4 = [];
-% CollectedData.Class2.Labels = [];
-% CollectedData.Class1.Labels = [];
-% 
-% % Get raw data
-% CollectedData.Class1 = parseData(CollectedData.Class1,'HighVolumeTest1.csv',1);
-% CollectedData.Class2 = parseData(CollectedData.Class2,'LowVolumeTest1.csv',2);
-% CollectedData.Class1 = parseData(CollectedData.Class1,'HighVolumeTest2.csv',1);
-% CollectedData.Class2 = parseData(CollectedData.Class2,'LowVolumeTest2.csv',2);
-% 
-% % get features
-% CollectedData.Features = [];
-% CollectedData.Labels = [];
-% for i=1:size(CollectedData.Class1.Ch1,1)
-%     features = extractFeatures(CollectedData.Class1.Ch1(i,:)');
-%     features = [features extractFeatures(CollectedData.Class1.Ch2(i,:)')];
-%     features = [features extractFeatures(CollectedData.Class1.Ch3(i,:)')];
-%     features = [features extractFeatures(CollectedData.Class1.Ch4(i,:)')];
-%     CollectedData.Features = [CollectedData.Features; features];
-%     CollectedData.Labels = [CollectedData.Labels; 1];
-% end
-% for i=1:size(CollectedData.Class2.Ch1,1)
-%     features = extractFeatures(CollectedData.Class2.Ch1(i,:)');
-%     features = [features extractFeatures(CollectedData.Class2.Ch2(i,:)')];
-%     features = [features extractFeatures(CollectedData.Class2.Ch3(i,:)')];
-%     features = [features extractFeatures(CollectedData.Class2.Ch4(i,:)')];
-%     CollectedData.Features = [CollectedData.Features; features];
-%     CollectedData.Labels = [CollectedData.Labels; 2];
-% end
-% 
-% % Break up Collected Data
-% CollectedData.Learning.Features = [];
-% CollectedData.Learning.Labels =[];
-% CollectedData.Validation.Features =[];
-% CollectedData.Validation.Labels =[];
-% CollectedData.Testing.Features=[];
-% CollectedData.Testing.Labels=[];
-% % scramble data 
-% CollectedData.Features=CollectedData.Features(indiciesCollected,:);
-% CollectedData.Labels=CollectedData.Labels(indiciesCollected);
-% 
-% rows =size(CollectedData.Features,1);
-% CollectedData.Learning.Features=CollectedData.Features(1:round(rows/2),:);
-% CollectedData.Learning.Labels=CollectedData.Labels(1:round(rows/2),:);
-% CollectedData.Validation.Features=CollectedData.Features(round(rows/2)+1:round(rows*3/4),:);
-% CollectedData.Validation.Labels=CollectedData.Labels(round(rows/2)+1:round(rows*3/4),:);
-% CollectedData.Testing.Features=CollectedData.Features(round(rows*3/4)+1:end,:);
-% CollectedData.Testing.Labels=CollectedData.Labels(round(rows*3/4)+1:end,:);
+CollectedData.Class1.Ch1 = [];
+CollectedData.Class1.Ch2 = [];
+CollectedData.Class1.Ch3 = [];
+CollectedData.Class1.Ch4 = [];
+CollectedData.Class2.Ch1 = [];
+CollectedData.Class2.Ch2 = [];
+CollectedData.Class2.Ch3 = [];
+CollectedData.Class2.Ch4 = [];
+CollectedData.Class2.Labels = [];
+CollectedData.Class1.Labels = [];
+
+% Get raw data
+CollectedData.Class1 = parseData(CollectedData.Class1,'HighVolumeTest1.csv',1);
+CollectedData.Class2 = parseData(CollectedData.Class2,'LowVolumeTest1.csv',2);
+CollectedData.Class1 = parseData(CollectedData.Class1,'HighVolumeTest2.csv',1);
+CollectedData.Class2 = parseData(CollectedData.Class2,'LowVolumeTest2.csv',2);
+
+% get features
+CollectedData.Features = [];
+CollectedData.Labels = [];
+for i=1:size(CollectedData.Class1.Ch1,1)
+    features = extractFeatures(CollectedData.Class1.Ch1(i,:)');
+    features = [features extractFeatures(CollectedData.Class1.Ch2(i,:)')];
+    features = [features extractFeatures(CollectedData.Class1.Ch3(i,:)')];
+    features = [features extractFeatures(CollectedData.Class1.Ch4(i,:)')];
+    CollectedData.Features = [CollectedData.Features; features];
+    CollectedData.Labels = [CollectedData.Labels; 1];
+end
+for i=1:size(CollectedData.Class2.Ch1,1)
+    features = extractFeatures(CollectedData.Class2.Ch1(i,:)');
+    features = [features extractFeatures(CollectedData.Class2.Ch2(i,:)')];
+    features = [features extractFeatures(CollectedData.Class2.Ch3(i,:)')];
+    features = [features extractFeatures(CollectedData.Class2.Ch4(i,:)')];
+    CollectedData.Features = [CollectedData.Features; features];
+    CollectedData.Labels = [CollectedData.Labels; 2];
+end
+
+% Break up Collected Data
+CollectedData.Learning.Features = [];
+CollectedData.Learning.Labels =[];
+CollectedData.Validation.Features =[];
+CollectedData.Validation.Labels =[];
+CollectedData.Testing.Features=[];
+CollectedData.Testing.Labels=[];
+% scramble data 
+CollectedData.Features=CollectedData.Features(indiciesCollected,:);
+CollectedData.Labels=CollectedData.Labels(indiciesCollected);
+
+rows =size(CollectedData.Features,1);
+CollectedData.Learning.Features=CollectedData.Features(1:round(rows/2),:);
+CollectedData.Learning.Labels=CollectedData.Labels(1:round(rows/2),:);
+CollectedData.Validation.Features=CollectedData.Features(round(rows/2)+1:round(rows*3/4),:);
+CollectedData.Validation.Labels=CollectedData.Labels(round(rows/2)+1:round(rows*3/4),:);
+CollectedData.Testing.Features=CollectedData.Features(round(rows*3/4)+1:end,:);
+CollectedData.Testing.Labels=CollectedData.Labels(round(rows*3/4)+1:end,:);
 
 
 % Extract BCI Data
