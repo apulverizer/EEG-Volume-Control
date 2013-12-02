@@ -15,8 +15,21 @@ Data1 = Data((Labels==class1Label),:);
 Data2 = Data((Labels==class2Label),:);
 
 % pick first <HiddenLayers> as the centroids for each class
-Centroids1 = Data1(1:HiddenLayers,:);
-Centroids2 = Data2(1:HiddenLayers,:);
+if(HiddenLayers>size(Data1,1))
+    HiddenLayers1=size(Data1,1);
+    warning('Hidden layers 1 exceeds data; reduced to %d', HiddenLayers1);
+else
+    HiddenLayers1=HiddenLayers;
+end
+if(HiddenLayers>size(Data2,1))
+    HiddenLayers2=size(Data2,1);
+    warning('Hidden layers 2 exceeds data; reduced to %d', HiddenLayers2);
+else
+    HiddenLayers2=HiddenLayers;
+end
+
+Centroids1 = Data1(1:HiddenLayers1,:);
+Centroids2 = Data2(1:HiddenLayers2,:);
 
 % do k-means on them to get the best centroids
 [Centroids1, Members1] = myKmeans(Data1,Centroids1,200);

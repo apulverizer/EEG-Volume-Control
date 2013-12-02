@@ -14,5 +14,6 @@ end
 distance = sum(distance .^2,2);
 % equation
 activations = exp(-Beta .* distance);
+activations(isnan(activations))=0;
 end
 

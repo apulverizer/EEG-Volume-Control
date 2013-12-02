@@ -1,4 +1,4 @@
-function [C, G ] = PSORBFN( Iterations,C1,C2,SwarmSize, Data, Class1Label,Class2Label )
+function [C, G ] = PSORBFN( Iterations,C1,C2,SwarmSize, Data, Class1Label,Class2Label,min1,min2,max1,max2 )
 %PSO  
 %
 % swarm(index of particle, [location, velocity, best position, best
@@ -6,7 +6,7 @@ function [C, G ] = PSORBFN( Iterations,C1,C2,SwarmSize, Data, Class1Label,Class2
 
     % initialize swarm
     for i = 1 : SwarmSize;
-        swarm(i, 1, 1) = rand()*70;
+        swarm(i, 1, 1) = rand()*max1;
         swarm(i, 1, 2) = rand();
     end
 
@@ -24,17 +24,17 @@ function [C, G ] = PSORBFN( Iterations,C1,C2,SwarmSize, Data, Class1Label,Class2
             swarm(i, 1, 2) = swarm(i, 1, 2) + swarm(i, 2, 2);     %update y position
             
             % threshold values
-            if(swarm(i,1,1) <= 1)
-                swarm(i,1,1)=1;
+            if(swarm(i,1,1) <= min1)
+                swarm(i,1,1)=min1;
             end
-            if(swarm(i,1,2) <= 0)
-                swarm(i,1,2)=.001;
+            if(swarm(i,1,2) <= min2)
+                swarm(i,1,2)=min2;
             end   
-            if(swarm(i,1,2) >100)
-                swarm(i,1,2)=100;
+            if(swarm(i,1,2) >max2)
+                swarm(i,1,2)=max2;
             end
-            if(swarm(i,1,1) >30)
-                swarm(i,1,1)=30;
+            if(swarm(i,1,1) >max1)
+                swarm(i,1,1)=max1;
             end
             
             x = swarm(i, 1, 1);

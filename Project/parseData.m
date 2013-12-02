@@ -6,9 +6,9 @@ function [Data] = parseData(Data,fileName,classLabel)
     numberOfSamples=floor(l/960); % 1 second intervals
     for i=0:numberOfSamples-1
         Data.Ch1= [Data.Ch1; Ch1((i*960)+1:(i*960)+960)'];
-        Data.Ch2= [Data.Ch2; Ch1((i*960)+1:(i*960)+960)'];
-        Data.Ch3= [Data.Ch3; Ch1((i*960)+1:(i*960)+960)'];
-        Data.Ch4= [Data.Ch4; Ch1((i*960)+1:(i*960)+960)'];
+        Data.Ch2= [Data.Ch2; Ch2((i*960)+1:(i*960)+960)'];
+        Data.Ch3= [Data.Ch3; Ch3((i*960)+1:(i*960)+960)'];
+        Data.Ch4= [Data.Ch4; Ch4((i*960)+1:(i*960)+960)'];
         Data.Labels = [Data.Labels; classLabel];
     end;
 end
