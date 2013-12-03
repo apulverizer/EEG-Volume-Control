@@ -45,7 +45,7 @@ G_CollectedData_SVM = 0;
 % [C_Liver_RBFN, G_Liver_RBFN] = PSORBFN(Iterations,C1,C2,SwarmSize,LiverData,1,2,1,.001,70,100);
 % 
 % %% Test Data
-[C_CollectedData_RBFN, G_CollectedData_RBFN] = PSORBFN(Iterations,C1,C2,SwarmSize,CollectedData,1,2,1,0,150,100);
+% [C_CollectedData_RBFN, G_CollectedData_RBFN] = PSORBFN(Iterations,C1,C2,SwarmSize,CollectedData,1,2,1,0,150,100);
 % 
 % %%SVM
 % %% BCI Data
@@ -61,7 +61,7 @@ G_CollectedData_SVM = 0;
 % [C_Liver_SVM, G_Liver_SVM] = PSO(Iterations,C1,C2,SwarmSize,LiverData);
 
 %% Test Data
-[C_CollectedData_SVM, G_CollectedData_SVM] = PSO(Iterations,C1,C2,SwarmSize,CollectedData);
+ [C_CollectedData_SVM, G_CollectedData_SVM] = PSO(Iterations,C1,C2,SwarmSize,CollectedData);
 
 % %% Get Results
 % 
@@ -130,20 +130,20 @@ G_CollectedData_SVM = 0;
 
 %% Collected Data
 fprintf('Collected Data\n');
-params = sprintf('-t 0 -c %f -g %f -q', C_CollectedData_SVM, G_CollectedData_SVM);
+params = sprintf('-t 2 -c %f -g %f -q', C_CollectedData_SVM, G_CollectedData_SVM);
 model = svmtrain(CollectedData.Learning.Labels,CollectedData.Learning.Features,params);
 [predict_label, accuracy, dec_values] = svmpredict(CollectedData.Learning.Labels,CollectedData.Learning.Features, model); % test the training data
-fprintf('SVM Collected Data (Test): %f \n',accuracy(1));
+fprintf('SVM Collected Data (Learning): %f \n',accuracy(1));
 [predict_label, accuracy, dec_values] = svmpredict(CollectedData.Testing.Labels,CollectedData.Testing.Features, model); % test the training data
 fprintf('SVM Collected Data (Test): %f \n',accuracy(1));
 [predict_label, accuracy, dec_values] = svmpredict(CollectedData.Validation.Labels,CollectedData.Validation.Features, model); % test the training data
 fprintf('SVM Collected Data (Validation): %f \n',accuracy(1));
 
-modelRBFN = rbfnTrain(CollectedData.Learning.Labels,CollectedData.Learning.Features,C_BCI_RBFN,G_BCI_RBFN,1,2);
-[predictions, accuracy] = rbfnPredict(CollectedData.Testing.Labels,CollectedData.Testing.Features,modelRBFN,1,2);
-fprintf('RBFN BCIData (Test)  : %f \n',accuracy);
-[predictions, accuracy] = rbfnPredict(CollectedData.Validation.Labels,CollectedData.Validation.Features,modelRBFN,1,2);
-fprintf('RBFN BCIData (Validation)  : %f \n\n',accuracy);
+% modelRBFN = rbfnTrain(CollectedData.Learning.Labels,CollectedData.Learning.Features,C_CollectedData_RBFN,G_CollectedData_RBFN,1,2);
+% [predictions, accuracy] = rbfnPredict(CollectedData.Testing.Labels,CollectedData.Testing.Features,modelRBFN,1,2);
+% fprintf('RBFN BCIData (Test)  : %f \n',accuracy);
+% [predictions, accuracy] = rbfnPredict(CollectedData.Validation.Labels,CollectedData.Validation.Features,modelRBFN,1,2);
+% fprintf('RBFN BCIData (Validation)  : %f \n\n',accuracy);
 
 %% Print Results 
 results = [C_BCI_SVM, G_BCI_SVM, C_Breast_SVM, G_Breast_SVM, C_Diabetes_SVM, G_Diabetes_SVM,C_Liver_SVM, G_Liver_SVM, C_CollectedData_SVM, G_CollectedData_SVM,Iterations,C1,C2,SwarmSize;
