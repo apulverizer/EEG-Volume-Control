@@ -4,7 +4,7 @@
 % Liver
 % BCI
 % Test Data
-Iterations = 100;
+Iterations = 50;
 C1= 2.6;
 C2 = 1.5;
 SwarmSize = 20;
