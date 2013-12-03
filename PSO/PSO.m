@@ -54,9 +54,9 @@ function [C, G ] = PSO( Iterations,C1,C2,SwarmSize, Data )
         end
         
         % plot to see movements
-        %plot(swarm(:, 1, 1), swarm(:, 1, 2), 'x')   % drawing swarm movements
-        %axis([0,35000,0,32]);
-        %pause(.2)
+%         plot(swarm(:, 1, 1), swarm(:, 1, 2), 'x')   % drawing swarm movements
+%         axis([0,30,0,32]);
+%         pause(.2)
     end
     C=swarm(gbest, 3, 1);
     G=swarm(gbest, 3, 2);

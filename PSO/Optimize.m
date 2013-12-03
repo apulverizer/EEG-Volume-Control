@@ -4,6 +4,8 @@
 % Liver
 % BCI
 % Test Data
+load('../Project/project.mat');
+
 Iterations = 50;
 C1= 2.6;
 C2 = 1.5;
