@@ -1,5 +1,7 @@
 function SetWindowsVolume(proportion)
-%proportion = 0 to 1 (in Windows 7's scaling), default is 1
+%SetWindowsVolume Sets the volume of a Windows 7 PC using an exe
+% Input:
+%   proportion: 0 to 1 (in Windows 7's scaling), default is 1
 
 oldcd=cd;
 thisfilename=mfilename('fullpath');

@@ -1,8 +1,26 @@
 function [C, G ] = PSORBFN( Iterations,C1,C2,SwarmSize, Data, Class1Label,Class2Label,min1,min2,max1,max2 )
-%PSO  
+%PSORBFN Performs Particle Swarm Optimization for RBFN
+% Inputs:
+%   Iterations: The number of iterations to run
+%   C1: Constratint 1
+%   C2: Constratint 2
+%   SwarmSize: The size of the swarm
+%   Data: Stucture of the data to optimize
+%   Class1label: The label for class1
+%   Class2label: The label for class2 
+%   min1: The minimum threshold for C
+%   min2: The minimum threshold for G
+%   max1: The maximum threshold for C
+%   max2: The maximum threshold for G
+% Output:
+%   C: Best value of C
+%   G: Best value of G
+%
 %
 % swarm(index of particle, [location, velocity, best position, best
 % value], [x, y components or the value component])
+%
+% Author: Aaron Pulver 12/4/13 (Modified from Wesam Elshamy 6/28/06)
 
     % initialize swarm
     for i = 1 : SwarmSize;

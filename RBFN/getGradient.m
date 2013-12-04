@@ -4,6 +4,11 @@ function [Cost, Gradient  ] = getGradient(Weights,Data,Labels)
 %   Weights: A matrix of the weights 
 %   Data:   A matrix of the features
 %   Labels: A vector of the features corresponding labels
+% Ouput:
+%   Cost: The cost
+%   Gradient: The gradient
+%
+%   Author: Aaron Pulver 12/4/13 (Modified from Chris McCormick 8/15/13)
 
 % gets the changes for a single iteration of GD
 

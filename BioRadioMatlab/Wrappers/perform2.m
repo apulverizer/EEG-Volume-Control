@@ -1,4 +1,5 @@
 function [rawWindow] = perform2(rawWindow,windowSize)
+%perform2 Gets the new data from the BioRadio and appends it
 
 % Channels
 channelNumbers = [1 2 3 4];

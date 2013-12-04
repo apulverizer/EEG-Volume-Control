@@ -1,4 +1,13 @@
 function [fitness] = FitnessFunctionSVM(C,G, Data)
+%FitnessFunctionSVM The fitness function used to optimize the SVM
+% Inputs: 
+%   C: Cost
+%   G: Gamma 
+%   Data: The data stucture to optimize for
+% Output:
+%   fitness: The fitness of the function (0 is optimal)
+%
+%   Author: Aaron Pulver, Deep Tayal 12/4/13
     params = sprintf('-t 2 -c %f -g %f -q',C,G);
     clear accuracy;
     model = svmtrain(Data.Learning.Labels,Data.Learning.Features,params);

@@ -4,6 +4,12 @@ function [ activations ] = getActivations(Data,Centers,Beta )
 %   Data: A single data vector
 %   Centers: A matrix of the Centroids
 %   Beta: The corresponding Beta values for each centroid
+% Ouput:
+%   The activations for each input
+%
+%   activation = exp(-B*((x-u))^2)
+%
+% Author: Aaron Pulver 12/4/13 (Modified from McCormick 8/15/13)
 
 distance = zeros(size(Centers));
 % get the difference from each center to the Data point

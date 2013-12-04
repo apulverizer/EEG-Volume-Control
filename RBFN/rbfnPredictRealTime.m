@@ -1,9 +1,13 @@
 function [ predict_Label] = rbfnPredictRealTime(Data,Model,class1Label,class2Label )
-%% Uses the model to predict the classes
+%Uses the model to predict the classes in real time (one sample)
 % Input:
-%   Labels: A vector of the class labels
 %   Data: A matrix of the features
 %   Model: The RBFN model to use
+%   class1Label: The class 1 label
+%   class2label: The class 2 label
+% Output:
+%   predict_Label: The predicted class for the single sample
+%   Author: Aaron Pulver 12/4/13
 
 % Initialize variables
 % for every sample

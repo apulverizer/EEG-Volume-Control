@@ -1,5 +1,9 @@
 %% Real-time Volume control
+% Collects data in real-time from the BioRadio, classifies it and adjust
+% the volume of the Windows 7 PC
 %
+% Author: Aaron Pulver 12/4/13
+
 % Add paths and clear memory and charts
 close all;
 clear all;

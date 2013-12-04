@@ -1,8 +1,20 @@
 function [C, G ] = PSO( Iterations,C1,C2,SwarmSize, Data )
-%PSO  
+%PSORBFN Performs Particle Swarm Optimization for RBFN
+% Inputs:
+%   Iterations: The number of iterations to run
+%   C1: Constratint 1
+%   C2: Constratint 2
+%   SwarmSize: The size of the swarm
+%   Data: Stucture of the data to optimize
+% Output:
+%   C: Best value of C
+%   G: Best value of G
+%
 %
 % swarm(index of particle, [location, velocity, best position, best
 % value], [x, y components or the value component])
+%
+% Author: Aaron Pulver, Deep Tayal 12/4/13 (Modified from Wesam Elshamy 6/28/06)
 
     % initialize swarm
     for i = 1 : SwarmSize;

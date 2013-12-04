@@ -4,6 +4,12 @@ function [ predict_Label, accuracy ] = rbfnPredict(Labels,Data,Model,class1Label
 %   Labels: A vector of the class labels
 %   Data: A matrix of the features
 %   Model: The RBFN model to use
+%   Class1Label: The label for class 1
+%   Class2Label: The label for class 2
+% Output:
+%   predict_Label: A vector of the predicted classes
+%   accuracy: The accuracy of the predictions
+%   Author: Aaron Pulver 12/4/13
 
 % Initialize variables
 predict_Label = zeros(size(Labels,1),1);

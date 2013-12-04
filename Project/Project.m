@@ -1,9 +1,14 @@
-%% BioRobotics Project
-% Aaron Pulver
-% Deep Tayal
-% Load and extract data
+%% EEG Data Processing and Classification
+% Authors: Aaron Pulver, Deep Tayal
+% 
+% This script loads data with features already extracted. 
+% The various data sets are run through classification algorithms which
+% have been optimized using PSO. The results are printed.
+
+
 %% Add paths and clear memory and charts
 close all;
+clear all;
 fprintf('Adding paths and loading pre-compiled data...\n');
 addpath(genpath('../Data Collection'));
 addpath(genpath('../libsvm-3.17'));
@@ -16,73 +21,73 @@ addpath(genpath('../BioRadioMatlab'));
 load('project.mat');
 
 % %% Extract Data Collected---------------------------------------------------------------------------------------------------------
-fprintf('Extracting and parsing collected data...\n');
-% Get Raw Data
-CollectedData.Class1.Ch1 = [];
-CollectedData.Class1.Ch2 = [];
-CollectedData.Class1.Ch3 = [];
-CollectedData.Class1.Ch4 = [];
-CollectedData.Class2.Ch1 = [];
-CollectedData.Class2.Ch2 = [];
-CollectedData.Class2.Ch3 = [];
-CollectedData.Class2.Ch4 = [];
-CollectedData.Class2.Labels = [];
-CollectedData.Class1.Labels = [];
-
-% Get raw data
-CollectedData.Class1 = parseData(CollectedData.Class1,'HighVolumeTest1.csv',1);
-CollectedData.Class2 = parseData(CollectedData.Class2,'LowVolumeTest1.csv',2);
-CollectedData.Class1 = parseData(CollectedData.Class1,'HighVolumeTest2.csv',1);
-CollectedData.Class2 = parseData(CollectedData.Class2,'LowVolumeTest2.csv',2);
-CollectedData.Class1 = parseData(CollectedData.Class1, 'highVol1.csv',1);
-CollectedData.Class2 = parseData(CollectedData.Class2, 'lowVol1.csv',2);
-CollectedData.Class1 = parseData(CollectedData.Class1, 'highVol2.csv',1);
-CollectedData.Class2 = parseData(CollectedData.Class2, 'lowVol2.csv',2);
-CollectedData.Class1 = parseData(CollectedData.Class1, 'highVol3.csv',1);
-CollectedData.Class2 = parseData(CollectedData.Class2, 'lowVol3.csv',2);
-% get features
-CollectedData.Features = [];
-CollectedData.Labels = [];
-for i=1:size(CollectedData.Class1.Ch1,1)
-    features = extractFeatures(CollectedData.Class1.Ch1(i,:)');
-    features = [features extractFeatures(CollectedData.Class1.Ch2(i,:)')];
-    features = [features extractFeatures(CollectedData.Class1.Ch3(i,:)')];
-    features = [features extractFeatures(CollectedData.Class1.Ch4(i,:)')];
-    CollectedData.Features = [CollectedData.Features; features];
-    CollectedData.Labels = [CollectedData.Labels; 1];
-end
-for i=1:size(CollectedData.Class2.Ch1,1)
-    features = extractFeatures(CollectedData.Class2.Ch1(i,:)');
-    features = [features extractFeatures(CollectedData.Class2.Ch2(i,:)')];
-    features = [features extractFeatures(CollectedData.Class2.Ch3(i,:)')];
-    features = [features extractFeatures(CollectedData.Class2.Ch4(i,:)')];
-    CollectedData.Features = [CollectedData.Features; features];
-    CollectedData.Labels = [CollectedData.Labels; 2];
-end
-
-% Break up Collected Data (Training)
-% -----------------------------------------------------------------------
-CollectedData.Features(isinf(CollectedData.Features)) = 0;
-CollectedData.Features(isnan(CollectedData.Features)) = 0;
-CollectedData.Learning.Features = [];
-CollectedData.Learning.Labels =[];
-CollectedData.Validation.Features =[];
-CollectedData.Validation.Labels =[];
-CollectedData.Testing.Features=[];
-CollectedData.Testing.Labels=[];
-% scramble data
-indiciesCollected = randperm(size(CollectedData.Features,1));
-CollectedData.Features=CollectedData.Features(indiciesCollected,:);
-CollectedData.Labels=CollectedData.Labels(indiciesCollected);
-
-rows =size(CollectedData.Features,1);
-CollectedData.Learning.Features=CollectedData.Features(1:round(rows/2),:);
-CollectedData.Learning.Labels=CollectedData.Labels(1:round(rows/2),:);
-CollectedData.Validation.Features=CollectedData.Features(round(rows/2)+1:round(rows*3/4),:);
-CollectedData.Validation.Labels=CollectedData.Labels(round(rows/2)+1:round(rows*3/4),:);
-CollectedData.Testing.Features=CollectedData.Features(round(rows*3/4)+1:end,:);
-CollectedData.Testing.Labels=CollectedData.Labels(round(rows*3/4)+1:end,:);
-  
+% fprintf('Extracting and parsing collected data...\n');
+% % Get Raw Data
+% CollectedData.Class1.Ch1 = [];
+% CollectedData.Class1.Ch2 = [];
+% CollectedData.Class1.Ch3 = [];
+% CollectedData.Class1.Ch4 = [];
+% CollectedData.Class2.Ch1 = [];
+% CollectedData.Class2.Ch2 = [];
+% CollectedData.Class2.Ch3 = [];
+% CollectedData.Class2.Ch4 = [];
+% CollectedData.Class2.Labels = [];
+% CollectedData.Class1.Labels = [];
+% 
+% % Get raw data
+% CollectedData.Class1 = parseData(CollectedData.Class1,'HighVolumeTest1.csv',1);
+% CollectedData.Class2 = parseData(CollectedData.Class2,'LowVolumeTest1.csv',2);
+% CollectedData.Class1 = parseData(CollectedData.Class1,'HighVolumeTest2.csv',1);
+% CollectedData.Class2 = parseData(CollectedData.Class2,'LowVolumeTest2.csv',2);
+% CollectedData.Class1 = parseData(CollectedData.Class1, 'highVol1.csv',1);
+% CollectedData.Class2 = parseData(CollectedData.Class2, 'lowVol1.csv',2);
+% CollectedData.Class1 = parseData(CollectedData.Class1, 'highVol2.csv',1);
+% CollectedData.Class2 = parseData(CollectedData.Class2, 'lowVol2.csv',2);
+% CollectedData.Class1 = parseData(CollectedData.Class1, 'highVol3.csv',1);
+% CollectedData.Class2 = parseData(CollectedData.Class2, 'lowVol3.csv',2);
+% % get features
+% CollectedData.Features = [];
+% CollectedData.Labels = [];
+% for i=1:size(CollectedData.Class1.Ch1,1)
+%     features = extractFeatures(CollectedData.Class1.Ch1(i,:)',250);
+%     features = [features extractFeatures(CollectedData.Class1.Ch2(i,:)',250)];
+%     features = [features extractFeatures(CollectedData.Class1.Ch3(i,:)',250)];
+%     features = [features extractFeatures(CollectedData.Class1.Ch4(i,:)',250)];
+%     CollectedData.Features = [CollectedData.Features; features];
+%     CollectedData.Labels = [CollectedData.Labels; 1];
+% end
+% for i=1:size(CollectedData.Class2.Ch1,1)
+%     features = extractFeatures(CollectedData.Class2.Ch1(i,:)',250);
+%     features = [features extractFeatures(CollectedData.Class2.Ch2(i,:)',250)];
+%     features = [features extractFeatures(CollectedData.Class2.Ch3(i,:)',250)];
+%     features = [features extractFeatures(CollectedData.Class2.Ch4(i,:)',250)];
+%     CollectedData.Features = [CollectedData.Features; features];
+%     CollectedData.Labels = [CollectedData.Labels; 2];
+% end
+% 
+% % Break up Collected Data (Training)
+% % -----------------------------------------------------------------------
+% CollectedData.Features(isinf(CollectedData.Features)) = 0;
+% CollectedData.Features(isnan(CollectedData.Features)) = 0;
+% CollectedData.Learning.Features = [];
+% CollectedData.Learning.Labels =[];
+% CollectedData.Validation.Features =[];
+% CollectedData.Validation.Labels =[];
+% CollectedData.Testing.Features=[];
+% CollectedData.Testing.Labels=[];
+% % scramble data
+% %indiciesCollected = randperm(size(CollectedData.Features,1));
+% CollectedData.Features=CollectedData.Features(indiciesCollected,:);
+% CollectedData.Labels=CollectedData.Labels(indiciesCollected);
+% 
+% rows =size(CollectedData.Features,1);
+% CollectedData.Learning.Features=CollectedData.Features(1:round(rows/2),:);
+% CollectedData.Learning.Labels=CollectedData.Labels(1:round(rows/2),:);
+% CollectedData.Validation.Features=CollectedData.Features(round(rows/2)+1:round(rows*3/4),:);
+% CollectedData.Validation.Labels=CollectedData.Labels(round(rows/2)+1:round(rows*3/4),:);
+% CollectedData.Testing.Features=CollectedData.Features(round(rows*3/4)+1:end,:);
+% CollectedData.Testing.Labels=CollectedData.Labels(round(rows*3/4)+1:end,:);
+%   
 % % Extract Sample Data Set Liver
 % fprintf('Extracting and parsing liver data...\n');
 % [Y,X] = libsvmread('../TestData/liver-disorders');
@@ -142,23 +147,23 @@ CollectedData.Testing.Labels=CollectedData.Labels(round(rows*3/4)+1:end,:);
 % BreastCancerData.Validation.Labels=X(round(rows/2)+1:round(rows*3/4),11);
 % BreastCancerData.Testing.Features=X(round(rows*3/4)+1:end,2:10);
 % BreastCancerData.Testing.Labels=X(round(rows*3/4)+1:end,11);
-% 
-% %% Format S4bData Data
+
+%% Format S4bData Data
 % Extract S4bData Data
 % fprintf('Extracting and parsing S4b data...\n');
-% S4bData = ExtractBCIData(cellstr(['../TestData/S4b.gdf']));
+% S4bData = ExtractBCIData(cellstr(['../TestData/S4b.gdf']),125);
 % 
 % S4bData.Features = [];
 % S4bData.Labels = [];
 % for i=1:size(S4bData.Class1.Ch1,2)
-%     features = extractFeatures(S4bData.Class1.Ch1(:,i));
-%     features = [features extractFeatures(S4bData.Class1.Ch2(:,i))];
+%     features = extractFeatures(S4bData.Class1.Ch1(:,i),62.5);
+%     features = [features extractFeatures(S4bData.Class1.Ch2(:,i),125)];
 %     S4bData.Features = [S4bData.Features; features];
 %     S4bData.Labels = [S4bData.Labels; 1];
 % end
 % for i=1:size(S4bData.Class2.Ch1,2)
-%     features = extractFeatures(S4bData.Class2.Ch1(:,i));
-%     features = [features extractFeatures(S4bData.Class2.Ch2(:,i))];
+%     features = extractFeatures(S4bData.Class2.Ch1(:,i),62.5);
+%     features = [features extractFeatures(S4bData.Class2.Ch2(:,i),125)];
 %     S4bData.Features = [S4bData.Features; features];
 %     S4bData.Labels = [S4bData.Labels; 2];
 % end
@@ -183,21 +188,21 @@ CollectedData.Testing.Labels=CollectedData.Labels(round(rows*3/4)+1:end,:);
 % S4bData.Testing.Features=S4bData.Features(round(rows*3/4)+1:end,:);
 % S4bData.Testing.Labels=S4bData.Labels(round(rows*3/4)+1:end,:);
 
-% %% Format BCI Data
+%% Format BCI Data
 % fprintf('Extracting and parsing BCI B0101T-B0103T data...\n');
-% BCIData = ExtractBCIData(cellstr(['../TestData/B0101T.gdf';'../TestData/B0102T.gdf';'../TestData/B0103T.gdf';]));
+% BCIData = ExtractBCIData(cellstr(['../TestData/B0101T.gdf';'../TestData/B0102T.gdf';'../TestData/B0103T.gdf';]),250);
 % 
 % BCIData.Features = [];
 % BCIData.Labels = [];
 % for i=1:size(BCIData.Class1.Ch1,2)
-%     features = extractFeatures(BCIData.Class1.Ch1(:,i));
-%     features = [features extractFeatures(BCIData.Class1.Ch2(:,i))];
+%     features = extractFeatures(BCIData.Class1.Ch1(:,i),250);
+%     features = [features extractFeatures(BCIData.Class1.Ch2(:,i),250)];
 %     BCIData.Features = [BCIData.Features; features];
 %     BCIData.Labels = [BCIData.Labels; 1];
 % end
 % for i=1:size(BCIData.Class2.Ch1,2)
-%     features = extractFeatures(BCIData.Class2.Ch1(:,i));
-%     features = [features extractFeatures(BCIData.Class2.Ch2(:,i))];
+%     features = extractFeatures(BCIData.Class2.Ch1(:,i),250);
+%     features = [features extractFeatures(BCIData.Class2.Ch2(:,i),250)];
 %     BCIData.Features = [BCIData.Features; features];
 %     BCIData.Labels = [BCIData.Labels; 2];
 % end
@@ -275,33 +280,33 @@ fprintf('RBFN Diabetes (Test): %f \n',accuracy(1));
 [~, accuracy] = rbfnPredict(DiabetesData.Validation.Labels,DiabetesData.Validation.Features,modelRBFN,-1,1);
 fprintf('RBFN Diabetes (Validation): %f \n\n',accuracy(1));
 
-%BCI
-fprintf('BCIData----------------------------------------------------------------------\n');
-model = svmtrain(BCIData.Learning.Labels,BCIData.Learning.Features,'-t 2 -c 238.45 -g 0.025962 -q');
-[~, accuracy, ~] = svmpredict(BCIData.Testing.Labels,BCIData.Testing.Features, model); % test the training data
-fprintf('SVM BCI (Test): %f \n',accuracy(1));
-[~, accuracy, ~] = svmpredict(BCIData.Validation.Labels,BCIData.Validation.Features, model); % test the training data
-fprintf('SVM BCI (Validation): %f \n',accuracy(1));
-
-modelRBFN = rbfnTrain(BCIData.Learning.Labels,BCIData.Learning.Features,6,.34641,1,2);
-[~, accuracy] = rbfnPredict(BCIData.Testing.Labels,BCIData.Testing.Features,modelRBFN,1,2);
-fprintf('RBFN BCIData (Test)  : %f \n',accuracy);
-[~, accuracy] = rbfnPredict(BCIData.Validation.Labels,BCIData.Validation.Features,modelRBFN,1,2);
-fprintf('RBFN BCIData (Validation)  : %f \n\n',accuracy);
-
-%S4bData
-fprintf('S4b Data----------------------------------------------------------------------\n');
-model = svmtrain(S4bData.Learning.Labels,S4bData.Learning.Features,'-t 2 -c 238.45 -g 0.025962 -q');
-[~, accuracy, ~] = svmpredict(S4bData.Testing.Labels,S4bData.Testing.Features, model); % test the training data
-fprintf('SVM S4b Data (Test): %f \n',accuracy(1));
-[~, accuracy, ~] = svmpredict(S4bData.Validation.Labels,S4bData.Validation.Features, model); % test the training data
-fprintf('SVM S4b Data (Learning): %f \n',accuracy(1));
-
-modelRBFN = rbfnTrain(S4bData.Learning.Labels,S4bData.Learning.Features,6,.34641,1,2);
-[~, accuracy] = rbfnPredict(S4bData.Testing.Labels,S4bData.Testing.Features,modelRBFN,1,2);
-fprintf('RBFN S4b Data (Test)  : %f \n',accuracy);
-[~, accuracy] = rbfnPredict(S4bData.Validation.Labels,S4bData.Validation.Features,modelRBFN,1,2);
-fprintf('RBFN S4b Data (Learning)  : %f \n\n',accuracy);
+% %BCI
+% fprintf('BCIData----------------------------------------------------------------------\n');
+% model = svmtrain(BCIData.Learning.Labels,BCIData.Learning.Features,'-t 2 -c 238.45 -g 0.025962 -q');
+% [~, accuracy, ~] = svmpredict(BCIData.Testing.Labels,BCIData.Testing.Features, model); % test the training data
+% fprintf('SVM BCI (Test): %f \n',accuracy(1));
+% [~, accuracy, ~] = svmpredict(BCIData.Validation.Labels,BCIData.Validation.Features, model); % test the training data
+% fprintf('SVM BCI (Validation): %f \n',accuracy(1));
+% 
+% modelRBFN = rbfnTrain(BCIData.Learning.Labels,BCIData.Learning.Features,6,.34641,1,2);
+% [~, accuracy] = rbfnPredict(BCIData.Testing.Labels,BCIData.Testing.Features,modelRBFN,1,2);
+% fprintf('RBFN BCIData (Test)  : %f \n',accuracy);
+% [~, accuracy] = rbfnPredict(BCIData.Validation.Labels,BCIData.Validation.Features,modelRBFN,1,2);
+% fprintf('RBFN BCIData (Validation)  : %f \n\n',accuracy);
+% 
+% %S4bData
+% fprintf('S4b Data----------------------------------------------------------------------\n');
+% model = svmtrain(S4bData.Learning.Labels,S4bData.Learning.Features,'-t 2 -c 238.45 -g 0.025962 -q');
+% [~, accuracy, ~] = svmpredict(S4bData.Testing.Labels,S4bData.Testing.Features, model); % test the training data
+% fprintf('SVM S4b Data (Test): %f \n',accuracy(1));
+% [~, accuracy, ~] = svmpredict(S4bData.Validation.Labels,S4bData.Validation.Features, model); % test the training data
+% fprintf('SVM S4b Data (Learning): %f \n',accuracy(1));
+% 
+% modelRBFN = rbfnTrain(S4bData.Learning.Labels,S4bData.Learning.Features,6,.34641,1,2);
+% [~, accuracy] = rbfnPredict(S4bData.Testing.Labels,S4bData.Testing.Features,modelRBFN,1,2);
+% fprintf('RBFN S4b Data (Test)  : %f \n',accuracy);
+% [~, accuracy] = rbfnPredict(S4bData.Validation.Labels,S4bData.Validation.Features,modelRBFN,1,2);
+% fprintf('RBFN S4b Data (Learning)  : %f \n\n',accuracy);
 
 % Collected Data
 fprintf('Collected Data---------------------------------------------------------------\n');

@@ -4,9 +4,16 @@ function [ beta ] = getBeta(Data,Centroids,Members, BetaPower )
 %   Data: An nxm matrix of the features
 %   Centroids: A matrix of the centroids
 %   Members: A vector of which feature set corresponds to which member
+% Ouput:
+%   beta: A vector of beta values
 %
 %   Uses the average distance between the centroid and it's points (sigma)
-%   beta = 1/(2*sigma^2) for now at least
+%   beta = 1/(2*sigma^BetaPower) for now at least
+%
+%   sigma = mean(distance of all particles distance to their closest
+%   centroid/layer)
+%
+%   Author: Aaron Pulver 12/4/13 (Modified from Chris McCormick 8/15/13)
 
 sigma = zeros(size(Centroids,1),1);
 

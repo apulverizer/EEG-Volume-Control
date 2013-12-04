@@ -4,9 +4,13 @@ function [ model ] = rbfnTrain(Labels,Data,HiddenLayers, BetaPower,class1Label,c
 %   Labels: an (Nx1) vector of the class labels
 %   Data: an NxM matrix of the features
 %   HiddenLayers: The number of RBF to use
+%   BetaPower: Power used to calculate the beta coefficients
+%   class1Label: The label for class 1
+%   class2Label: The label for class 2
 %
 % Output:
-%   Model: The model to be used later when predicting results
+%   Model: The model structure to be used later when predicting results
+%   Author: Aaron Pulver 12/4/13 (Modified from Chris McCormick 8/15/13)
 
 % for breast cancer data
 % can be modified later for more 

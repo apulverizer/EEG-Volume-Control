@@ -1,6 +1,12 @@
 function [Data] = parseData(Data,fileName,classLabel)
-%UNTITLED4 Summary of this function goes here
-%   Detailed explanation goes here
+%parseData Parses the BCI data and labels it
+% Inputs:
+%   Data: A structure with Channels and Labels
+%   fileName: The file to import and parse
+%   classLabel: The label of the class (1,2,3...)
+%
+% Author: Aaron Pulver 12/4/13
+
     [Ch1,Ch2,Ch3,Ch4]=importData(fileName,2);
     l=length(Ch1);
     numberOfSamples=floor(l/960); % 1 second intervals

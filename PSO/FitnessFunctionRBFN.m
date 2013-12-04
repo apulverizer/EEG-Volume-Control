@@ -1,5 +1,17 @@
 function [fitness] = FitnessFunctionRBFN(C,G, Data, Class1Label,Class2Label)
-    clear accuracy;
+%FitnessFunctionRBFN This is the fitness function used for PSO with the
+%RBFN. 
+% Inputs: 
+%   C: The number of hidden layers to use
+%   G: The power to use when calculating Beta coefficents
+%   Data: The data structure to optimize for (BCI, BreastCancer...)
+%   Class1Label: The label of class 1 (1,2,3...)
+%   Class2Label: The label of class 2 (1,2,3...)
+% Output:
+%   fitness: The fitness of the function (0 is optimal)
+%
+% Author: Aaron Pulver 12/4/13
+clear accuracy;
     modelRBFN = rbfnTrain(Data.Learning.Labels,Data.Learning.Features,C,G,Class1Label,Class2Label);
     modelRBFNValidation = rbfnTrain(Data.Validation.Labels,Data.Validation.Features,C,G,Class1Label,Class2Label);
     [predictions, accuracy1] = rbfnPredict(Data.Validation.Labels,Data.Validation.Features,modelRBFN,Class1Label,Class2Label);

@@ -1,6 +1,15 @@
 function [members ] = getClosestCentroid(Data,Centroids )
 %getClosestCentroid uses the Euclidean distance to find the closest
 %centroid to each data point/feature
+%
+% Input:
+%   Data: A matrix of data
+%   Centroids: A matrix of all the centroids
+% Output:
+%   members: A vectors specifying which centorid each sample of data is
+%   closest to
+%
+% Author: Aaron Pulver 12/4/13 (Modified from Chris McCormick 8/15/13)
 
 % get the number of centroids
 numCentroids=size(Centroids,1);

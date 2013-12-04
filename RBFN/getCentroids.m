@@ -4,6 +4,10 @@ function [centroids] = getCentroids(Data,members,numCentroids )
 %   Data: An nxm matrix of the features
 %   Members: A nx1 vector of the indecies of the centroids to which the data points belong
 %   numCentroids: the number of centroids to have
+% Ouput:
+%   centroids: A vector of centroids;
+%
+%   Author: Aaron Pulver 12/4/13 (Modified from Chris McCormick 8/15/13)
 
 [a b] = size(Data);
 centroids = zeros(numCentroids,b);
