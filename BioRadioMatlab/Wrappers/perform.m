@@ -13,4 +13,4 @@ channelNumbers = [1 2];
  
  % Take fft of the current data
  
- fftWindow = computeFT(filterWindow, channelNumbers);
+ %fftWindow = computeFT(filterWindow, channelNumbers);

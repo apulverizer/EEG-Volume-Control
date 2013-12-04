@@ -180,6 +180,7 @@ if( strcmp(buttonString,'Connect') )
     portNames = get(handles.cboPortName,'String');
     portSel = get(handles.cboPortName,'Value');
     portName = portNames{portSel};
+    portName = 'COM10';
 
     % Change the Button
     set(handles.btnConnect,'String', 'Connecting');

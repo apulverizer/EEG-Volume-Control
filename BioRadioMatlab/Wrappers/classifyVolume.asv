@@ -1,0 +1,6 @@
+function [prediction] = classifyVolume(rawData)
+    % loop over channels?
+    features = extractFeatures(rawData);
+    
+    prediction = rbfnPredictRealTime(features,modelRBFN,1,2);
+end;
