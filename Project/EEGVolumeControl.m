@@ -65,7 +65,6 @@ addpath(genpath('../Project'));
 addpath(genpath('../PSO'));
 addpath(genpath('../VolumeControl'));
 addpath(genpath('../BioRadioMatlab'));
-load('realtime.mat');
 
 % initialize global variables
 global bioRadioHandle isCollecting;
@@ -73,6 +72,7 @@ bioRadioHandle = -1;
 isCollecting = 0;
 global isEnabled;
 isEnabled=0;
+
 
 % UIWAIT makes EEGVolumeControl wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
@@ -100,38 +100,46 @@ global isEnabled;
 global bioRadioHandle;
 global isCollecting;
 if(isEnabled==0)
+    load('realtime.mat');
     set(handles.togglebutton1,'String','Disable');
     isEnabled=1;
-    bioRadioHandle = connectBioRadio(dllPath,configPath,portName);
+    bioRadioHandle = connectBioRadio(get(handles.DLLTXT,'String'),get(handles.configFileTXT,'String'),'COM5');
     % start collecting
     isCollecting = 1;
 
-    Volume=.5;
+    Volume=.0;
     SetWindowsVolume(Volume);
+    collectionInterval=960;
     rawWindow = zeros( 4,collectionInterval);
     while (isCollecting ==1)
         % wait one second
         pause(1);
+        fprintf('Running..\n');
         % get new values
-        rawWindow = perform2(rawWindow,collectionInterval);
-        % classify 
-        if(2==classifyVolume(rawWindow, modelRBFN))
-            Volume= Volume-.05;
-        else
-            Volume = Volume+.05;
-        end
-        % set  volume
-        if(Volume >= 0 && Volume <=1)
-            SetWindowsVolume(Volume);
-            set(handles.slider1,'Value',Volume);
-        end
+        if(bioRadioHandle  ~= 1)
+            rawWindow = perform2(rawWindow,collectionInterval);
+            rawWindow= rawWindow*10^6;
+            % classify 
+            if(1==classifyVolume(rawWindow, modelSVM))
+                Volume= Volume-.05;
+            else
+                Volume = Volume+.05;
+            end
+            % set  volume
+            if(Volume >= 0 && Volume <=1)
+                SetWindowsVolume(Volume);
+                set(handles.slider1,'Value',Volume);
+            end
+        end;
     end;
 else
+    set(handles.togglebutton1,'String','Enable');
     isEnabled=0;
     % clean up 
     isCollecting = 0;
     if(bioRadioHandle ~=1)
         disconnectBioRadio(bioRadioHandle);
+        bioRadioHandle = -1;
     end
 end;
     
@@ -188,7 +196,7 @@ function Config_BTN_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 [FileName,PathName] = uigetfile('*.ini','Select BioRadio Configfile');
-set(handles.configFileTXT,'String',PathName);
+set(handles.configFileTXT,'String',strcat(PathName,FileName));
 
 
 
@@ -236,7 +244,6 @@ global bioRadioHandle;
 global isCollecting;
 
 isCollecting = 0;
-
 if( bioRadioHandle ~= -1 )
     disconnectBioRadio(bioRadioHandle);
 end

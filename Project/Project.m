@@ -45,6 +45,8 @@ load('project.mat');
 % CollectedData.Class2 = parseData(CollectedData.Class2, 'lowVol2.csv',2);
 % CollectedData.Class1 = parseData(CollectedData.Class1, 'highVol3.csv',1);
 % CollectedData.Class2 = parseData(CollectedData.Class2, 'lowVol3.csv',2);
+% CollectedData.Class1 = parseData(CollectedData.Class1,'HighVol-12-5-13.csv',1);
+% CollectedData.Class2 = parseData(CollectedData.Class2,'LowVol12-5-13.csv',2);
 % % get features
 % CollectedData.Features = [];
 % CollectedData.Labels = [];
@@ -76,7 +78,7 @@ load('project.mat');
 % CollectedData.Testing.Features=[];
 % CollectedData.Testing.Labels=[];
 % % scramble data
-% %indiciesCollected = randperm(size(CollectedData.Features,1));
+% indiciesCollected = randperm(size(CollectedData.Features,1));
 % CollectedData.Features=CollectedData.Features(indiciesCollected,:);
 % CollectedData.Labels=CollectedData.Labels(indiciesCollected);
 % 
