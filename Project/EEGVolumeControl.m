@@ -22,7 +22,7 @@ function varargout = EEGVolumeControl(varargin)
 
 % Edit the above text to modify the response to help EEGVolumeControl
 
-% Last Modified by GUIDE v2.5 04-Dec-2013 11:40:02
+% Last Modified by GUIDE v2.5 04-Dec-2013 23:04:36
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -100,6 +100,7 @@ global isEnabled;
 global bioRadioHandle;
 global isCollecting;
 if(isEnabled==0)
+    set(handles.togglebutton1,'String','Disable');
     isEnabled=1;
     bioRadioHandle = connectBioRadio(dllPath,configPath,portName);
     % start collecting
@@ -108,7 +109,7 @@ if(isEnabled==0)
     Volume=.5;
     SetWindowsVolume(Volume);
     rawWindow = zeros( 4,collectionInterval);
-    while (isCollecting ==1 && Volume < 1 && Volume >0)
+    while (isCollecting ==1)
         % wait one second
         pause(1);
         % get new values
@@ -220,3 +221,22 @@ function DLL_BTN_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 [FileName,PathName] = uigetfile('*.dll','Select BioRadio DLL');
 set(handles.DLLTXT,'String',PathName);
+
+
+% --- Executes when user attempts to close figure1.
+function figure1_CloseRequestFcn(hObject, eventdata, handles)
+% hObject    handle to figure1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: delete(hObject) closes the figure
+delete(hObject);
+
+global bioRadioHandle;
+global isCollecting;
+
+isCollecting = 0;
+
+if( bioRadioHandle ~= -1 )
+    disconnectBioRadio(bioRadioHandle);
+end
