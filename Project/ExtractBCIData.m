@@ -9,8 +9,8 @@ function [Data] = ExtractBCIData(filePath,Fs )
 %
 % Author: Aaron Pulver 12/4/13
 
-numSeconds=2;
-startOffsetSeconds =0;
+numSeconds=2.5;
+startOffsetSeconds =.5;
 % each column if one instance of the user performing the class 
 class1DataCh1 = [];
 class2DataCh1 = [];

@@ -99,6 +99,13 @@ function togglebutton1_Callback(hObject, eventdata, handles)
 global isEnabled;
 global bioRadioHandle;
 global isCollecting;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% parameters to change
+collectionInterval=1440;
+start=1440-960;
+stop=1140;
+pauseTime=.08;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 if(isEnabled==0)
     load('realtime.mat');
     set(handles.togglebutton1,'String','Disable');
@@ -109,18 +116,16 @@ if(isEnabled==0)
 
     Volume=.0;
     SetWindowsVolume(Volume);
-    collectionInterval=960;
     rawWindow = zeros( 4,collectionInterval);
     while (isCollecting ==1)
         % wait one second
-        pause(1);
-        fprintf('Running..\n');
+        pause(pauseTime);
         % get new values
         if(bioRadioHandle  ~= 1)
             rawWindow = perform2(rawWindow,collectionInterval);
-            rawWindow= rawWindow*10^6;
+            data= rawWindow(start:stop);
             % classify 
-            if(1==classifyVolume(rawWindow, modelSVM))
+            if(1==classifyVolume(data, modelSVM))
                 Volume= Volume-.05;
             else
                 Volume = Volume+.05;

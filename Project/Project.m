@@ -21,7 +21,7 @@ addpath(genpath('../BioRadioMatlab'));
 load('project.mat');
 
 % %% Extract Data Collected---------------------------------------------------------------------------------------------------------
-% fprintf('Extracting and parsing collected data...\n');
+% % fprintf('Extracting and parsing collected data...\n');
 % % Get Raw Data
 % CollectedData.Class1.Ch1 = [];
 % CollectedData.Class1.Ch2 = [];
@@ -45,8 +45,8 @@ load('project.mat');
 % CollectedData.Class2 = parseData(CollectedData.Class2, 'lowVol2.csv',2);
 % CollectedData.Class1 = parseData(CollectedData.Class1, 'highVol3.csv',1);
 % CollectedData.Class2 = parseData(CollectedData.Class2, 'lowVol3.csv',2);
-% CollectedData.Class1 = parseData(CollectedData.Class1,'HighVol-12-5-13.csv',1);
-% CollectedData.Class2 = parseData(CollectedData.Class2,'LowVol12-5-13.csv',2);
+% %CollectedData.Class1 = parseData(CollectedData.Class1,'HighVol-12-5-13.csv',1);
+% %CollectedData.Class2 = parseData(CollectedData.Class2,'LowVol12-5-13.csv',2);
 % % get features
 % CollectedData.Features = [];
 % CollectedData.Labels = [];
@@ -283,18 +283,18 @@ fprintf('RBFN Diabetes (Test): %f \n',accuracy(1));
 fprintf('RBFN Diabetes (Validation): %f \n\n',accuracy(1));
 
 % %BCI
-% fprintf('BCIData----------------------------------------------------------------------\n');
-% model = svmtrain(BCIData.Learning.Labels,BCIData.Learning.Features,'-t 2 -c 238.45 -g 0.025962 -q');
-% [~, accuracy, ~] = svmpredict(BCIData.Testing.Labels,BCIData.Testing.Features, model); % test the training data
-% fprintf('SVM BCI (Test): %f \n',accuracy(1));
-% [~, accuracy, ~] = svmpredict(BCIData.Validation.Labels,BCIData.Validation.Features, model); % test the training data
-% fprintf('SVM BCI (Validation): %f \n',accuracy(1));
-% 
-% modelRBFN = rbfnTrain(BCIData.Learning.Labels,BCIData.Learning.Features,6,.34641,1,2);
-% [~, accuracy] = rbfnPredict(BCIData.Testing.Labels,BCIData.Testing.Features,modelRBFN,1,2);
-% fprintf('RBFN BCIData (Test)  : %f \n',accuracy);
-% [~, accuracy] = rbfnPredict(BCIData.Validation.Labels,BCIData.Validation.Features,modelRBFN,1,2);
-% fprintf('RBFN BCIData (Validation)  : %f \n\n',accuracy);
+fprintf('BCIData----------------------------------------------------------------------\n');
+model = svmtrain(BCIData.Learning.Labels,BCIData.Learning.Features,'-t 2 -c 64.4725172780102 -g .7262 -q');
+[~, accuracy, ~] = svmpredict(BCIData.Testing.Labels,BCIData.Testing.Features, model); % test the training data
+fprintf('SVM BCI (Test): %f \n',accuracy(1));
+[~, accuracy, ~] = svmpredict(BCIData.Validation.Labels,BCIData.Validation.Features, model); % test the training data
+fprintf('SVM BCI (Validation): %f \n',accuracy(1));
+
+modelRBFN = rbfnTrain(BCIData.Learning.Labels,BCIData.Learning.Features,6,.34641,1,2);
+[~, accuracy] = rbfnPredict(BCIData.Testing.Labels,BCIData.Testing.Features,modelRBFN,1,2);
+fprintf('RBFN BCIData (Test)  : %f \n',accuracy);
+[~, accuracy] = rbfnPredict(BCIData.Validation.Labels,BCIData.Validation.Features,modelRBFN,1,2);
+fprintf('RBFN BCIData (Validation)  : %f \n\n',accuracy);
 % 
 % %S4bData
 % fprintf('S4b Data----------------------------------------------------------------------\n');
@@ -329,6 +329,7 @@ fprintf('RBFN Collected Data (Validation)  : %f\n',accuracy);
 [~, accuracy] = rbfnPredict(CollectedData.Learning.Labels,CollectedData.Learning.Features,modelRBFN,1,2);
 fprintf('RBFN Collected Data (Learning)  : %f \n\n',accuracy);
 
+clear features;
 clear params;
 clear model;
 clear modelRBFN;
