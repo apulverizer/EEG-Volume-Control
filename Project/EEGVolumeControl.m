@@ -101,10 +101,10 @@ global bioRadioHandle;
 global isCollecting;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % parameters to change
-collectionInterval=1440;
-start=1440-960;
-stop=1140;
-pauseTime=.08;
+collectionInterval=960; % Buffer size, should probably be 1.5*(the size you want) 
+% start=1440-960;
+% stop=1140;
+pauseTime=1;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 if(isEnabled==0)
     load('realtime.mat');
@@ -123,7 +123,7 @@ if(isEnabled==0)
         % get new values
         if(bioRadioHandle  ~= 1)
             rawWindow = perform2(rawWindow,collectionInterval);
-            data= rawWindow(start:stop);
+            data= rawWindow; % may want to use stop/start to extract a section of the buffer 
             % classify 
             if(1==classifyVolume(data, modelSVM))
                 Volume= Volume-.05;

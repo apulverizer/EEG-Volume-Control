@@ -18,6 +18,7 @@ addpath(genpath('../Project'));
 addpath(genpath('../PSO'));
 addpath(genpath('../VolumeControl'));
 addpath(genpath('../BioRadioMatlab'));
+addpath(genpath('../biosig/t300_FeatureExtraction'));
 load('project.mat');
 
 % %% Extract Data Collected---------------------------------------------------------------------------------------------------------
